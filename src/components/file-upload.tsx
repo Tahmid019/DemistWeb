@@ -17,7 +17,7 @@ const FileUpload = ({ onFileUrlChange }: { onFileUrlChange: (url: string) => voi
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
-      <div {...getRootProps()} className="flex items-center justify-center w-full h-full p-4 border-2 border-dashed rounded-lg cursor-pointer bg-white border-gray-300 hover:bg-gray-50">
+      <div {...getRootProps()} className="flex items-center justify-center w-full p-4 border-2 border-dashed rounded-lg cursor-pointer bg-white border-gray-300 hover:bg-gray-50">
         <input {...getInputProps()} />
         {uploadedFile ? (
           <div>

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../app/firebase/config';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import Sidebar from '../components/sidebar';
 
 export default function Home() {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
@@ -35,7 +36,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-full bg-gray-100">
+      <Sidebar />
       <div className="flex-1 flex flex-col">
         <div className="flex items-center justify-between p-4 border-b">
           <h1 className="text-lg font-bold">Product Requirements Doc.pdf</h1>
@@ -64,7 +66,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div className="w-1/3 border-l border-gray-200">
+      <div className="w-96 flex flex-col border-l border-gray-200">
         <Chat />
       </div>
     </div>
