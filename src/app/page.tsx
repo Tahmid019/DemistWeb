@@ -35,9 +35,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-full bg-gray-100">
-      <div className="flex-1 w-1/2 p-4 flex flex-col">
-        <div className="flex items-center justify-between pb-4 border-b">
+    <div className="flex h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col">
+        <div className="flex items-center justify-between p-4 border-b">
           <h1 className="text-lg font-bold">Product Requirements Doc.pdf</h1>
           <div className="flex items-center">
             <Bell className="w-5 h-5 mr-4 text-gray-500" />
@@ -56,7 +56,7 @@ export default function Home() {
             )}
           </div>
         </div>
-        <div className="flex-grow mt-4 h-[calc(100%-4rem)]">
+        <div className="flex-1 p-4">
           {fileUrl ? (
             <iframe src={fileUrl} className="w-full h-full" title="PDF document" />
           ) : (

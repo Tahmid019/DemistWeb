@@ -1,67 +1,72 @@
 
-"use client";
-import { useState } from 'react';
-import { Send } from 'lucide-react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { auth, db } from '../app/firebase/config';
-import { collection, addDoc, serverTimestamp, query, orderBy } from 'firebase/firestore';
+'use client'
+import { useState, useEffect } from 'react';
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { db } from '../app/firebase/config';
+
+interface Message {
+  id: string;
+  text: string;
+  timestamp: Timestamp | null;
+}
 
 const Chat = () => {
-  const [message, setMessage] = useState('');
-  const [user] = useAuthState(auth);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
 
-  const [messages, loading, error] = useCollection(
-    query(collection(db, 'chats'), orderBy('timestamp', 'asc'))
-  );
-
-  const sendMessage = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    if (message.trim() === '' || !user) return;
-
-    try {
-      await addDoc(collection(db, 'chats'), {
-        text: message,
-        timestamp: serverTimestamp(),
-        uid: user.uid,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
+  useEffect(() => {
+    const q = query(collection(db, 'chats'), orderBy('timestamp', 'asc'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const messages: Message[] = [];
+      querySnapshot.forEach((doc) => {
+        messages.push({ id: doc.id, ...doc.data() } as Message);
       });
-      setMessage('');
-    } catch (error) {
-      console.error("Error sending message: ", error);
-    }
+      setMessages(messages);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const sendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim() === '') return;
+
+    await addDoc(collection(db, 'chats'), {
+      text: input,
+      timestamp: serverTimestamp(),
+    });
+
+    setInput('');
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-grow p-4 overflow-y-auto">
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error.message}</p>}
-        {messages && messages.docs.map(doc => {
-          const data = doc.data();
-          const isUser = data.uid === user?.uid;
-          return (
-            <div key={doc.id} className={`flex items-start mb-4 ${isUser ? 'justify-end' : ''}`}>
-              <div className={`p-3 text-sm rounded-lg ${isUser ? 'text-white bg-blue-600' : 'bg-gray-200'}`}>
-                <p>{data.text}</p>
-              </div>
-            </div>
-          );
-        })}
+    <div className="flex flex-col h-full bg-white">
+      <div className="p-4 border-b">
+        <h2 className="text-lg font-bold">Chat with Document</h2>
       </div>
-      <div className="p-4 bg-white border-t border-gray-200">
-        <form onSubmit={sendMessage} className="relative">
+      <div className="flex-1 p-4 overflow-y-auto">
+        {messages.map((message) => (
+          <div key={message.id} className="mb-4">
+            <div className="text-sm text-gray-500">
+              {message.timestamp?.toDate().toLocaleTimeString()}
+            </div>
+            <div className="p-2 rounded-lg bg-gray-100">
+              {message.text}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="p-4 border-t">
+        <form onSubmit={sendMessage} className="flex">
           <input
             type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Send a message"
-            className="w-full py-2 pl-4 pr-12 text-gray-700 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            disabled={!user}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 p-2 border rounded-l-lg"
+            placeholder="Type a message..."
           />
-          <button type="submit" className="absolute inset-y-0 right-0 flex items-center px-4 text-white bg-blue-600 rounded-r-md hover:bg-blue-700" disabled={!user}>
-            <Send className="w-5 h-5" />
+          <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700">
+            Send
           </button>
         </form>
       </div>
