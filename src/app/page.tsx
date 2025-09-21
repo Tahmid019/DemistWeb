@@ -1,6 +1,6 @@
 
 "use client";
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Chat from '../components/chat';
 import FileUpload from '../components/file-upload';
 import { Bell } from 'lucide-react';
@@ -10,10 +10,10 @@ import { auth } from '../app/firebase/config';
 import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
 export default function Home() {
-  const [fileUrl, setFileUrl] = useState(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [user] = useAuthState(auth);
 
-  const handleFileUrlChange = (url: SetStateAction<null>) => {
+  const handleFileUrlChange = (url: string) => {
     setFileUrl(url);
   };
 

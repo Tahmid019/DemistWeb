@@ -15,7 +15,7 @@ const Chat = () => {
     query(collection(db, 'chats'), orderBy('timestamp', 'asc'))
   );
 
-  const sendMessage = async (e) => {
+  const sendMessage = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (message.trim() === '' || !user) return;
 
