@@ -1,6 +1,6 @@
 
 "use client";
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import Chat from '../components/chat';
 import FileUpload from '../components/file-upload';
 import { Bell } from 'lucide-react';
@@ -13,7 +13,7 @@ export default function Home() {
   const [fileUrl, setFileUrl] = useState(null);
   const [user] = useAuthState(auth);
 
-  const handleFileUrlChange = (url) => {
+  const handleFileUrlChange = (url: SetStateAction<null>) => {
     setFileUrl(url);
   };
 
