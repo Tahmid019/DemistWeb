@@ -1,6 +1,6 @@
 
 "use client";
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Chat from '../components/chat';
 import FileUpload from '../components/file-upload';
 import { Bell } from 'lucide-react';
@@ -13,7 +13,7 @@ export default function Home() {
   const [fileUrl, setFileUrl] = useState(null);
   const [user] = useAuthState(auth);
 
-  const handleFileUrlChange = (url: SetStateAction<null>) => {
+  const handleFileUrlChange = (url) => {
     setFileUrl(url);
   };
 
@@ -43,7 +43,7 @@ export default function Home() {
             <Bell className="w-5 h-5 mr-4 text-gray-500" />
             {user ? (
               <div className="flex items-center">
-                <Image src={user.photoURL} alt={user.displayName} width={32} height={32} className="rounded-full" />
+                {user.photoURL && <Image src={user.photoURL} alt={user.displayName || 'user avatar'} width={32} height={32} className="rounded-full" />}
                 <span className="ml-2 font-semibold">{user.displayName}</span>
                 <button onClick={handleSignOut} className="ml-4 px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700">
                   Sign Out
