@@ -1,48 +1,26 @@
 
-# TalkPDF Dashboard Blueprint
+# TalkPDF Blueprint
 
 ## Overview
 
-TalkPDF is a web application that allows users to upload PDF documents and interact with them through a chat interface. The application is built with Next.js and utilizes Firebase for backend services.
+TalkPDF is a web application that allows users to upload PDF documents and interact with them through a chat interface. The application is built with Next.js and Firebase and features a responsive design that works on all screen sizes.
 
-## Project Structure
+## Features
 
-- **/app**: Core directory for file-based routing.
-  - **/firebase**: Contains Firebase configuration and service-related files.
-- **/components**: Reusable UI components.
-- **/lib**: Utility functions and libraries.
-- **/public**: Static assets like images and fonts.
+- **PDF Viewer:** Users can upload PDF documents and view them directly in the browser.
+- **Chat Interface:** Users can ask questions about the uploaded document and receive answers from an AI assistant.
+- **Responsive Design:** The application is fully responsive and works on all screen sizes.
+- **Collapsible Sidebar:** The main sidebar can be toggled on smaller screens to save space.
+- **Responsive Chat:** The chat component is hidden on smaller screens and can be toggled with a floating action button.
+- **Improved File Upload:** The file upload component features a drag-and-drop area and a file preview.
+- **Welcome Message:** The chat component displays a welcome message to guide the user.
+- **User Authentication:** Users can sign in with their Google account to save their chat history.
 
-## Implemented Features
+## Design
 
-### 1. **Dashboard Layout**
-
-- **Sidebar**: A collapsible sidebar for navigation, displaying options for creating new documents and searching through existing ones.
-- **Main Content Area**: The central part of the dashboard, split into two sections:
-    - **Document Viewer**: Displays the uploaded PDF file in an iframe.
-    - **Chat Interface**: Allows users to interact with the document through a chat-based interface.
-- **Top Bar**: A header that displays the current document's title and user information, including an avatar and name.
-
-### 2. **File Upload**
-
-- **Drag-and-Drop**: Users can upload PDF files by dragging and dropping them into a designated area.
-- **File Selection**: Users can also click to open a file selection dialog.
-- **PDF Display**: Once uploaded, the PDF is rendered in an iframe, allowing users to view the document.
-
-### 3. **Firebase Integration**
-
-- **Authentication**: Users can sign in and out with their Google accounts to access the application.
-- **User Information**: The user's name and profile picture are displayed in the top bar after they sign in.
-- **Real-time Chat**: The chat interface is connected to Firestore, enabling real-time messaging between users.
-
-### 4. **Styling and Design**
-
-- **Tailwind CSS**: The application is styled using Tailwind CSS for a modern and responsive design.
-- **Lucide Icons**: Icons are used throughout the application to enhance usability and visual appeal.
-- **Color Scheme**: A clean and professional color scheme with a dark sidebar and a light main content area.
-
-## Future Development
-
-- **Database Integration**: Connect to a database to store user information, documents, and chat history.
-- **Enhanced PDF Interaction**: Add features like text highlighting, annotations, and search within the document.
-
+- **Colors:** The application uses a modern color palette with a mix of blues, grays, and whites.
+- **Typography:** The application uses the Inter font family, which is a clean and modern sans-serif font.
+- **Icons:** The application uses icons from the Lucide icon library to provide a consistent and intuitive user experience.
+- **Layout:** The application uses a two-column layout, with the main content area on the right and a sidebar on the left.
+- **Spacing:** The application uses consistent spacing throughout the user interface to provide a balanced and visually appealing look.
+- **Shadows:** The application uses shadows to create depth and lift elements from the background.
